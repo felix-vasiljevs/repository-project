@@ -32,11 +32,6 @@ class LoginController
             return new Redirect('/login.twig');
         }
 
-//        if ($user) {
-//            $_SESSION['user'] = $user;
-//            return new Redirect('/crypto');
-//        }
-
         if (!isset($_SESSION['user'])) {
             return new Redirect('login.twig');
         }
@@ -44,21 +39,3 @@ class LoginController
         return new Redirect('/');
     }
 }
-/*
- *         $loginService = new LoginService();
-        $loginService->execute(
-            new LoginServiceRequest(
-                $_POST['email'],
-                $_POST['password']
-            )
-        );
-
-        if (!$_POST['email'] || !$_POST['password']) {
-            return new Redirect('login.twig');
-        }
-
-        return new Redirect('/');
-    }
- *
- *
- */

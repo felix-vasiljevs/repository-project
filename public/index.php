@@ -1,6 +1,7 @@
 <?php
 
 use App\Controllers\CryptoController;
+use App\Controllers\ForgotPasswordController;
 use App\Controllers\LoginController;
 use App\Controllers\RegisterController;
 use App\Redirect;
@@ -32,6 +33,8 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
     $r->addRoute('POST', '/register', [RegisterController::class, 'registerUser']);
     $r->addRoute('GET', '/login', [LoginController::class, 'showForm']);
     $r->addRoute('POST', '/login', [LoginController::class, 'login']);
+    $r->addRoute('GET', '/forgotPassword', [ForgotPasswordController::class, 'showForm']);
+    $r->addRoute('POST', '/forgotPassword', [ForgotPasswordController::class, 'login']);
 });
 
 // Fetch method and URI from somewhere

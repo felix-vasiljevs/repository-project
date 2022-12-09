@@ -10,9 +10,11 @@
 <body>
 <h1>Crypto Currencies</h1>
     {% for currency in currencies %}
-        <h2>{{ currency.name }}</h2>
-        <p>{{ currency.description }}</p>
-        <p>Current price: {{ currency.price }}</p>
+        <h2>{{ currency.getCryptoName }}</h2>
+        <p>{{ currency.getCurrentPrice }}</p>
+        <p>Current price: {{ currency.getPercentChange }}</p>
+        <p>Current price: {{ currency.getHighPrice }}</p>
+        <p>Current price: {{ currency.getLowPrice }}</p>
     {% endfor %}
 </body>
 </html>
