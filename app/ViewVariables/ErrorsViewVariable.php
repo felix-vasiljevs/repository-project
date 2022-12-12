@@ -18,6 +18,6 @@ class ErrorsViewVariable implements ViewVariable
 
     public function getValue(): array
     {
-        return$_SESSION['errors'] ?? [];
+        return $_SESSION['errors'] ?? [];
     }
 }

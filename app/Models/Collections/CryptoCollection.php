@@ -10,7 +10,9 @@ class CryptoCollection
 
     public function __construct(array $crypto = [])
     {
-        $this->crypto = $crypto;
+        foreach ($crypto as $currency) {
+            $this->add($currency);
+        }
     }
 
     public function add(Crypto $crypto): void
@@ -18,7 +20,7 @@ class CryptoCollection
         $this->crypto[] = $crypto;
     }
 
-    public function getCrypto(): array
+    public function all(): array
     {
         return $this->crypto;
     }

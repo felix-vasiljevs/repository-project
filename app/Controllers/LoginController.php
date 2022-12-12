@@ -6,6 +6,7 @@ use App\Services\LoginService;
 use App\Services\LoginServiceRequest;
 use App\Template;
 use App\Redirect;
+use App\Validation;
 
 class LoginController
 {
@@ -16,26 +17,26 @@ class LoginController
 
     public function login(): Redirect
     {
-        $loginService = new LoginService();
-        $user = $loginService->execute(
-            new LoginServiceRequest(
-                $_POST['email'],
-                $_POST['password']
-            )
-        );
+        $email = $_POST['email'];
+        $password = $_POST['password'];
 
-        if (!$_POST['email'] || !$_POST['password']) {
-            return new Redirect('/login.twig');
+        $validation = new Validation();
+        $id = $validation->validateEmail($email);
+        if (!$id) {
+            $_SESSION['error'] = 'Email is not valid';
+            return new Redirect('/login');
         }
 
-        if(!$_POST['password'] == $user['password']) {
-            return new Redirect('/login.twig');
+        $_SESSION['user']['email'] = $email;
+        if (!$validation->validatePassword($password)) {
+            $_SESSION['error'] = 'Password is not valid';
+            return new Redirect('/login');
         }
 
-        if (!isset($_SESSION['user'])) {
-            return new Redirect('login.twig');
-        }
+
+
 
         return new Redirect('/');
     }
+
 }

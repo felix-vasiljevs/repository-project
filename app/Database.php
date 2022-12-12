@@ -5,7 +5,7 @@ namespace App;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 
-class Database
+class Database extends \mysqli
 {
     private static ?Connection $connection = null;
 

@@ -11,21 +11,13 @@ use Twig\Loader\FilesystemLoader;
 
 require_once '../vendor/autoload.php';
 
+\App\Session::initialize();
+
 $loader = new FilesystemLoader('../views');
 $twig = new Environment($loader);
 
-$dotenv = Dotenv\Dotenv::createImmutable("/home/spoon/PhpstormProjects/CODELEX/crypto-program");
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
 $dotenv->load();
-
-$config = Finnhub\Configuration::getDefaultConfiguration()->setApiKey('token', $_ENV['API_KEY']);
-$client = new Finnhub\Api\DefaultApi(
-    new GuzzleHttp\Client(),
-    $config
-);
-
-echo "<pre>";
-
-//var_dump($client->quote('AAPL'));die;
 
 $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
     $r->addRoute('GET', '/', [CryptoController::class, 'index']);
@@ -35,6 +27,8 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
     $r->addRoute('POST', '/login', [LoginController::class, 'login']);
     $r->addRoute('GET', '/forgotPassword', [ForgotPasswordController::class, 'showForm']);
     $r->addRoute('POST', '/forgotPassword', [ForgotPasswordController::class, 'login']);
+    $r->addRoute('GET', '/profile', [UserProfileController::class, 'showForm']);
+    $r->addRoute('POST', '/profile', [UserProfileController::class, 'yourProfile']);
 });
 
 // Fetch method and URI from somewhere
@@ -66,7 +60,11 @@ switch ($routeInfo[0]) {
         if ($response instanceof Template) {
             echo $twig->render($response->getPath(), $response->getParams());
 
-            unset($_SESSION);
+            unset($_SESSION['errors']['name']);
+            unset($_SESSION['errors']['surname']);
+            unset($_SESSION['errors']['email']);
+            unset($_SESSION['errors']['password']);
+            unset($_SESSION['errors']['passwordConfirmation']);
         }
 
         if ($response instanceof Redirect) {

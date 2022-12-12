@@ -2,7 +2,9 @@
 
 namespace App\Repositories;
 
+use App\Models\Collections\CryptoCollection;
+
 interface CryptoRepository
 {
-    public function getCrypto(string $search, ?string $category = null): CryptoCollection;
+    public function findAllSymbols(array $symbols): CryptoCollection;
 }

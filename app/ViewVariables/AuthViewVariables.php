@@ -8,12 +8,12 @@ class AuthViewVariables implements ViewVariable
 {
     public function getName(): string
     {
-        return 'auth';
+        return 'user';
     }
 
     public function getValue(): array
     {
-        if (!isset($_SESSION['auth'])) {
+        if (!isset($_SESSION['user'])) {
             return [];
         }
 
@@ -33,7 +33,4 @@ class AuthViewVariables implements ViewVariable
             'password' => $user['password']
         ];
     }
-}
-{
-
 }

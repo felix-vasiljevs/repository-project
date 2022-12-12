@@ -1,20 +1,59 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
+{% extends 'layout.twig' %}
+{% block content %}
 <body>
-<h1>Crypto Currencies</h1>
-    {% for currency in currencies %}
-        <h2>{{ currency.getCryptoName }}</h2>
-        <p>{{ currency.getCurrentPrice }}</p>
-        <p>Current price: {{ currency.getPercentChange }}</p>
-        <p>Current price: {{ currency.getHighPrice }}</p>
-        <p>Current price: {{ currency.getLowPrice }}</p>
-    {% endfor %}
+<div class="flex items-center mb-3">
+        <input type="text" placeholder="Search for a cryptocurrency" class="border rounded px-3 py-2 mr-2" />
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Search</button>
+</div>
+<div>
+<ul>
+{% for cryptoCurrency in cryptoCurrencies %}
+        <li class="border-b border-gray-200 py-3">
+                <div class="flex items-center">
+                        <div class="text-gray-800 font-bold text-xl mr-2">
+                                {{ cryptoCurrency.getSymbol }}
+                        </div>
+                        <div class="text-gray-600 font-medium text-lg">
+                                {{ cryptoCurrency.getCryptoName }}
+                        </div>
+                </div>
+                <div class="ml-auto flex items-center">
+                        <div class="text-gray-600 font-medium text-lg mr-4">
+                                Current Price: ${{ cryptoCurrency.getPrice | number_format(2)}}
+                        </div>
+                        <div class="text-gray-600 font-medium text-lg mr-4">
+                                Percent Change (1h):
+                                {% if cryptoCurrency.getPercentChange1h > 0 %}
+                                <span class="text-green-500">
+                {% else %}
+                    <span class="text-red-500">
+                {% endif %}
+                            {{ cryptoCurrency.getPercentChange1h | number_format(3)}}%
+                </span>
+                        </div>
+                        <div class="text-gray-600 font-medium text-lg mr-4">
+                                Percent Change (24h):
+                                {% if cryptoCurrency.getPercentChange24h > 0 %}
+                                <span class="text-green-500">
+                {% else %}
+                    <span class="text-red-500">
+                {% endif %}
+                            {{ cryptoCurrency.getPercentChange24h | number_format(3) }}%
+                </span>
+                        </div>
+                        <div class="text-gray-600 font-medium text-lg">
+                                Percent Change (7d):
+                                {% if cryptoCurrency.getPercentChange7d > 0 %}
+                                <span class="text-green-500">
+                {% else %}
+                    <span class="text-red-500">
+                {% endif %}
+                            {{ cryptoCurrency.getPercentChange7d | number_format(3) }}%
+                </span>
+                </div>
+        </li>
+{% endfor %}
+</ul>
+</div>
 </body>
-</html>
+{% endblock %}

@@ -2,25 +2,24 @@
 
 namespace App\Controllers;
 
-use App\Services\CryptoService;
+use App\Services\CryptoCurrencies\ListCryptoService;
+use App\Session;
 use App\Template;
 
 class CryptoController
 {
     public function index(): Template
     {
-        $search = $_GET['search'] ?? '';
 
-        $category = $_GET['category'] ?? '';
-
-        $crypto = (new CryptoService())->execute($search, $category);
+    $search = $_GET['search'] ?? ['BTC', 'ETH', 'XRP', 'LTC', 'BCH', 'BNB', 'EOS', 'BSV', 'XLM', 'ADA'];
+        $service = new ListCryptoService();
+        $cryptoCurrencies = $service->execute($search);
 
         return new Template(
             '/crypto/crypto.twig',
             [
-                'crypto' => $crypto->getCrypto(),
-                'search' => $search,
-                'category' => $category,
+                'cryptoCurrencies' => $cryptoCurrencies->all(),
+                'search' => $search
             ]
         );
     }

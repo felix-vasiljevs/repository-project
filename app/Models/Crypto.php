@@ -4,27 +4,33 @@ namespace App\Models;
 
 class Crypto
 {
+    private string $symbol;
     private string $name;
-    private float $currentPrice;
-    private float $percentChange;
-    private float $highPrice;
-    private float $lowPrice;
-
+    private float $price;
+    private float $percentChange1h;
+    private float $percentChange24h;
+    private float $percentChange7d;
 
     public function __construct(
+        string $symbol,
         string $name,
-        float $currentPrice,
-        float $percentChange,
-        float $highPrice,
-        float $lowPrice
+        float $price,
+        float $percentChange1h,
+        float $percentChange24h,
+        float $percentChange7d
     )
     {
+        $this->symbol = $symbol;
         $this->name = $name;
+        $this->price = $price;
+        $this->percentChange1h = $percentChange1h;
+        $this->percentChange24h = $percentChange24h;
+        $this->percentChange7d = $percentChange7d;
+    }
 
-        $this->currentPrice = $currentPrice;
-        $this->percentChange = $percentChange;
-        $this->highPrice = $highPrice;
-        $this->lowPrice = $lowPrice;
+    public function getSymbol(): string
+    {
+        return $this->symbol;
     }
 
     public function getCryptoName(): string
@@ -32,24 +38,23 @@ class Crypto
         return $this->name;
     }
 
-    public function getCurrentPrice(): float
+    public function getPrice(): float
     {
-        return $this->currentPrice;
+        return $this->price;
     }
 
-    public function getPercentChange(): float
+    public function getPercentChange1h(): float
     {
-        return $this->percentChange;
+        return $this->percentChange1h;
     }
 
-    public function getHighPrice(): float
+    public function getPercentChange24h(): float
     {
-        return $this->highPrice;
+        return $this->percentChange24h;
     }
 
-    public function getLowPrice(): float
+    public function getPercentChange7d(): float
     {
-        return $this->lowPrice;
+        return $this->percentChange7d;
     }
-
 }

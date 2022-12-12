@@ -16,8 +16,8 @@ class LoginService
 
     public function execute(LoginServiceRequest $request): Connection
     {
-        $this->connection->insert(
-            'users',
+        $result = $this->connection->executeQuery(
+            'SELECT * FROM users WHERE email = :email AND password = :password',
             [
                 'email' => $request->getEmail(),
                 'password' => $request->getPassword()
